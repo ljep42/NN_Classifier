@@ -1,7 +1,6 @@
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
-
 import pickle
 
 filename = 'mnist_ML_model.sav'
@@ -55,8 +54,8 @@ while True:
         canvas[100:500, 100:500] = 0
     elif key == ord('p'):
         image = canvas[100:500, 100:500]
-        #print(image.shape)
-        #plt.imshow(image)
+
+        # display digit that is sent to model, scaled
         image = cv2.resize(image, (28, 28), interpolation=cv2.INTER_AREA)
         image = image / 255.0
         plt.imshow(image)

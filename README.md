@@ -1,3 +1,3 @@
 # NN_Classifier
 
-Creates a NN model from sklearn using MNIST dataset and uses model to predict handwritten digits
+This is a small app that uses python to create a NN model using sklearn using the MNIST dataset and uses the model to predict handwritten digits

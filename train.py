@@ -27,27 +27,29 @@ def train_neural():
 
     # assign features and labels
     X, y = mnist_data['data'], mnist_data['target']
-    print('Shape of X:', X.shape, '\n', 'Shape of y:', y.shape)
+    #print('Shape of X:', X.shape, '\n', 'Shape of y:', y.shape)
 
     # scale set
     X = X / 255.0
 
     # split into test and train into 75/25
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=10000)
-    print('train after split: ', X_train.shape, '\n', 'test after split: ', X_test.shape)
+    #print('train after split: ', X_train.shape, '\n', 'test after split: ', X_test.shape)
 
     #display_graph(X_train, y_train)
 
-    # create NN model
+    # instantiate estimator (Multi layer perceptron)
     model = MLPClassifier(hidden_layer_sizes=(100, 50, 20), max_iter=100, verbose=False, activation='relu',
                           solver='adam', early_stopping=True, learning_rate='adaptive', random_state=1)
-    # train NN
+    # fit with data
+    print('Training...')
     model.fit(X_train, y_train)
 
-    # print train & test scores
+    # print metrics
     print('train score: ', model.score(X_train, y_train))
     pred = model.predict(X_test)
     print('test score: ', model.score(X_test, pred))
+    print(classification_report(y_test, pred))
 
     # save model to disk
     filename = 'mnist_ML_model.sav'
@@ -55,4 +57,4 @@ def train_neural():
 
 
 train_neural()
-# print(classification_report(y_test, pred))
+print('Complete!')

@@ -41,6 +41,15 @@ def on_mouse_events(event, x, y, flags, params):
 cv2.namedWindow("Test Canvas")
 cv2.setMouseCallback("Test Canvas", on_mouse_events)
 
+# q: Quit
+# p: make prediction
+# c: clear canvas
+
+
+def clear_canvas():
+    canvas[100:500, 100:500] = 0
+
+
 while True:
     cv2.imshow("Test Canvas", canvas)
     key = cv2.waitKey(1) & 0xFF
@@ -51,7 +60,7 @@ while True:
     # elif key == ord('t'):
     #     is_drawing = False
     elif key == ord('c'):
-        canvas[100:500, 100:500] = 0
+        clear_canvas()
     elif key == ord('p'):
         image = canvas[100:500, 100:500]
 
@@ -67,6 +76,7 @@ while True:
         # send to prediction model
         load_model = pickle.load(open(filename, 'rb'))
         result = load_model.predict(image)
-        print('prediction: ', result)
+        print('prediction: ', result[0])
+        clear_canvas()
 
 cv2.destroyAllWindows()

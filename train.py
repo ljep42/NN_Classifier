@@ -7,9 +7,16 @@ import numpy as np
 import matplotlib.pyplot as plt
 import math
 
-def display_graph(x, y):
-    # display digits in plot where they equal certain number
-    number = '7'
+def display_graph(x, y, num):
+    '''
+    Used for debugging/learning.  Displays resized image of MNIST number specified by the parameter num
+    :param x: features array/matrix
+    :param y: target array/matrix
+    :param num: number of interest you want to see displayed
+    :return: outputs matplotlib window object
+    '''
+
+    number = num
     b = np.argwhere(y[0:1000] == number)
     rows = 20
     idx = 1
@@ -22,6 +29,11 @@ def display_graph(x, y):
     plt.show()
 
 def train_neural():
+    '''
+    Function that loads MNIST data and trains model prints metrics and saves model as pickle file
+    :return: pickle file save file in project folder path
+    '''
+
     # load data
     mnist_data = fetch_openml('mnist_784', version=1)
 
@@ -34,9 +46,8 @@ def train_neural():
 
     # split into test and train into 75/25
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=10000)
-    #print('train after split: ', X_train.shape, '\n', 'test after split: ', X_test.shape)
 
-    #display_graph(X_train, y_train)
+    #display_graph(X_train, y_train, 7)
 
     # instantiate estimator (Multi layer perceptron)
     model = MLPClassifier(hidden_layer_sizes=(100, 50, 20), max_iter=100, verbose=False, activation='relu',

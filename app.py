@@ -38,17 +38,17 @@ def on_mouse_events(event, x, y, flags, params):
         is_drawing = False
 
 
+def clear_canvas():
+    canvas[100:500, 100:500] = 0
+
+
 cv2.namedWindow("Test Canvas")
 cv2.setMouseCallback("Test Canvas", on_mouse_events)
 
 # q: Quit
 # p: make prediction
 # c: clear canvas
-
-
-def clear_canvas():
-    canvas[100:500, 100:500] = 0
-
+print('Press  \'q\' to quit, \'p\' to make prediction...')
 
 while True:
     cv2.imshow("Test Canvas", canvas)

@@ -34,6 +34,7 @@ def train_neural():
     :return: pickle file save file in project folder path
     '''
 
+    print('Loading data...')
     # load data from openML.org
     mnist_data = fetch_openml('mnist_784', version=1)
 
@@ -57,10 +58,8 @@ def train_neural():
     print('Training...')
     model.fit(X_train, y_train)
 
-    # display metrics
-    print('train score: ', model.score(X_train, y_train))
+    # display metrics for classification
     pred = model.predict(X_test)
-    print('test score: ', model.score(X_test, pred))
     print(classification_report(y_test, pred))
 
     # save model to disk

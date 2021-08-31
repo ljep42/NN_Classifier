@@ -10,7 +10,7 @@ canvas[100:500, 100:500] = 0
 start_point = None
 end_point = None
 is_drawing = False
-
+canvas_name = 'Test Canvas'
 
 def draw_line(img, start_at, end_at):
     cv2.line(img, start_at, end_at, 255, 30)
@@ -42,8 +42,8 @@ def clear_canvas():
     canvas[100:500, 100:500] = 0
 
 
-cv2.namedWindow("Test Canvas")
-cv2.setMouseCallback("Test Canvas", on_mouse_events)
+cv2.namedWindow(canvas_name)
+cv2.setMouseCallback(canvas_name, on_mouse_events)
 
 # q: Quit
 # p: make prediction
@@ -51,7 +51,7 @@ cv2.setMouseCallback("Test Canvas", on_mouse_events)
 print('Press  \'q\' to quit, \'p\' to make prediction...')
 
 while True:
-    cv2.imshow("Test Canvas", canvas)
+    cv2.imshow(canvas_name, canvas)
     key = cv2.waitKey(1) & 0xFF
     if key == ord('q'):
         break

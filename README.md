@@ -1,3 +1,5 @@
 # NN_Classifier
 
-This is a small app that uses python to create a NN model using sklearn using the MNIST dataset and uses the model to predict handwritten digits
+This is a small app that uses python to create a Multi layer perceptron using SKLearn 
+and the MNIST dataset from openML.org. The model is trained and saved so it can be used
+by the user to predict their handwritten digits

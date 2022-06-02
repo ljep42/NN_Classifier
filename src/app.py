@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pickle
 
-filename = 'mnist_ML_model.sav'
+filename = '../model/mnist_ML_model.sav'
 canvas = np.ones((600, 600), dtype='uint8') * 255
 canvas[100:500, 100:500] = 0
 
@@ -11,6 +11,7 @@ start_point = None
 end_point = None
 is_drawing = False
 canvas_name = 'Test Canvas'
+
 
 def draw_line(img, start_at, end_at):
     cv2.line(img, start_at, end_at, 255, 30)
@@ -46,8 +47,8 @@ cv2.namedWindow(canvas_name)
 cv2.setMouseCallback(canvas_name, on_mouse_events)
 
 # q: Quit
-# p: make prediction
-# c: clear canvas
+# p: make Prediction
+# c: Clear canvas
 print('Press  \'q\' to quit, \'p\' to make prediction...')
 
 while True:

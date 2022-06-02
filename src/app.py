@@ -1,7 +1,8 @@
-import cv2
-import numpy as np
-import matplotlib.pyplot as plt
 import pickle
+
+import cv2
+import matplotlib.pyplot as plt
+import numpy as np
 
 filename = '../model/mnist_ML_model.sav'
 canvas = np.ones((600, 600), dtype='uint8') * 255

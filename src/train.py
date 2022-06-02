@@ -1,12 +1,13 @@
-from sklearn.neural_network import MLPClassifier
+import math
+import pickle
+
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
 from sklearn.datasets import fetch_openml
 from sklearn.metrics import classification_report
 from sklearn.model_selection import train_test_split
-import pickle
-import numpy as np
-import matplotlib.pyplot as plt
-import math
-import pandas as pd
+from sklearn.neural_network import MLPClassifier
 
 
 def display_graph(x, y, num):

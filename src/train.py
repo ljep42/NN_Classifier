@@ -1,6 +1,6 @@
 import math
 import pickle
-
+import os
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -37,38 +37,40 @@ def get_data():
     User can get data from openML.org using the id of the dataset or load csv file
     :return: dictionary object, features and target as keys
     """
-    response = input("Do you want to load data from openML.org?\n")
-    assert response in ['Y', 'N'], 'Select Y or N!'
-
-    res = dict()
+    response = input("Do you want to load data from openML.org (Y/N)?\n")
+    assert response in ['Y', 'N']
+    datafile = "data.csv"
+    file_path = os.path.join("../data", datafile)
+    results = dict()
 
     if response == 'Y':
-        print('Loading Data from openML')
+        print('Loading Data from openML...')
         # load data from openML.org name='mnist_784'
         mnist_data = fetch_openml(data_id=554)
-        res['features'] = mnist_data['data']
-        res['target'] = mnist_data['target']
 
-        print('Writing data to disk')
-        datafm = mnist_data['data']
+        data = mnist_data['data']
         series = mnist_data['target']
+        results['features'] = mnist_data['data']
+        results['target'] = mnist_data['target']
 
         # merge series into df and write to csv
-        new = datafm.merge(series, left_index=True, right_index=True)
-        new.to_csv('data/data.csv')
+        df = data.merge(series, left_index=True, right_index=True)
+        print('Writing data to disk...')
+        df.to_csv(file_path)
+        print('Complete!')
     else:
-        print('Loading Data from csv...')
-        df = pd.read_csv('data/data.csv', dtype={'class': 'object'})
+        print('Loading Data from {}...'.format(file_path))
+        df = pd.read_csv(file_path, dtype={'class': 'object'})
         features = df.filter(like='pixel', axis=1)
         target = pd.Series(df['class'], dtype='category')
 
-        res['features'] = features
-        res['target'] = target
+        results['features'] = features
+        results['target'] = target
 
-    return res
+    return results
 
 
-def train_neural(data, metrics=True):
+def train_neural(data, metrics=True, **kwargs):
     """
     Function that loads MNIST data and trains MLP
     :param data: dictionary with features & target as keys
@@ -91,8 +93,7 @@ def train_neural(data, metrics=True):
     # display_graph(X_train, y_train, '7')
 
     # instantiate estimator (Multi Layer Perceptron Classifier)
-    model = MLPClassifier(hidden_layer_sizes=(100, 50, 20), max_iter=100, verbose=False, activation='relu',
-                          solver='adam', early_stopping=True, learning_rate='adaptive', random_state=1)
+    model = MLPClassifier(hidden_layer_sizes=(100, 50, 20), **kwargs)
     # fit with data
     print('Training Model...')
     model.fit(X_train.values, y_train)
@@ -113,13 +114,15 @@ def save_model(model):
     """
     # save model to disk
     print('Saving Model to disk...')
-    filename = 'model/mnist_ML_model.sav'
-    pickle.dump(model, open(filename, 'wb'))
+    filename = 'mnist_ML_model.sav'
+    filepath = os.path.join('../model', filename)
+    pickle.dump(model, open(filepath, 'wb'))
 
 
 def main():
     results = get_data()
-    model = train_neural(results, metrics=False)
+    model = train_neural(results, metrics=False, activation='relu', solver='adam', early_stopping=True, max_iter=20,
+                         learning_rate='adaptive', random_state=1, verbose=True)
     save_model(model)
     print('Complete!')
 
